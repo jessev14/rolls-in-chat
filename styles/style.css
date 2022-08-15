@@ -1,0 +1,71 @@
+.rolls-in-chat button {
+    background: rgba(0, 0, 0, 0.1);
+    border: 2px groove #eeede0;
+    font-size: 12px;
+    height: 24px;
+    line-height: 20px;
+    margin: 2px 0;
+}
+
+.ric {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.ric.hidden {
+    background: #e8e8ef;
+    border-radius: 8px;
+}
+
+.ric>* {
+    flex: none;
+}
+
+.ric img {
+    width: 50px;
+    border: none;
+}
+
+.ric .dice-formula {
+    flex: 1;
+    position: relative;
+    margin: 0 5px;
+    line-height: 24px;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.1);
+    border: 1px solid var(--color-border-light-2);
+    border-radius: 3px;
+    box-shadow: 0 0 2px #fff inset;
+    word-break: break-all;
+}
+
+.ric .result {
+    background-image: url(../../../icons/svg/d20-grey.svg);
+    position: relative;
+    width: 24px;
+    line-height: 24px;
+    float: left;
+    margin-right: 1px;
+    background-repeat: no-repeat;
+    background-size: 24px 24px;
+    font-size: var(--font-size-18);
+    color: #000;
+    font-weight: bold;
+    text-align: center;
+}
+
+.ric .result.pass {
+    color: #18520b;
+    filter: sepia(0.5) hue-rotate(60deg);
+}
+
+.ric .result.fail {
+    color: #aa0200;
+    filter: sepia(0.5) hue-rotate(-60deg);
+}
+
+a.chat-control-icon:hover {
+    text-shadow: 0 0 8px var(--color-shadow-primary);
+}
