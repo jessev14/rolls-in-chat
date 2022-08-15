@@ -14,7 +14,8 @@ Chat Card Rolls is a FVTT module for the dnd5e system that implements embedding 
 
 # Compatibility
 
-Not tested with non-core rolling modules. No compatibility is expected.
+- [Dice So Nice!](https://foundryvtt.com/packages/dice-so-nice/)
+- Not tested with non-core rolling modules. No compatibility is expected.
 
 # Dependencies
 
