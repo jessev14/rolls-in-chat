@@ -18,6 +18,6 @@ Not tested with non-core rolling modules. No compatibility is expected.
 
 # Dependencies
 
--![libWrapper] (https://foundryvtt.com/packages/lib-wrapper)
+- [libWrapper](https://foundryvtt.com/packages/lib-wrapper)
 
--![socketlib] (https://foundryvtt.com/packages/socketlib)
+- [socketlib](https://foundryvtt.com/packages/socketlib)
