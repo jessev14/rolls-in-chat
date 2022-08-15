@@ -11,3 +11,13 @@
 Chat Card Rolls is a FVTT module for the dnd5e system that implements embedding rolls into relevant chat cards.
 
 ![Chat Card Rolls D&D5e](/ric.png)
+
+# Compatibility
+
+Not tested with non-core rolling modules. No compatibility is expected.
+
+# Dependencies
+
+-![libWrapper] (https://foundryvtt.com/packages/lib-wrapper)
+
+-![socketlib] (https://foundryvtt.com/packages/socketlib)
