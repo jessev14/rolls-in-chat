@@ -12,12 +12,20 @@ Chat Card Rolls is a FVTT module for the dnd5e system that implements embedding 
 
 ![Chat Card Rolls D&D5e](/ric.png)
 
-# Compatibility
+## Usage
+
+The saving throw button on item chat cards will automatically cause those rolls to be added to the chat card itself, instead of creating a new chat card for the roll.
+
+A keybinding is available (default `P`) to open a dialog prompt for other types of rolls (or stand-alone saving throws). A module setting can be enabled to turn the d20 icon in the chat log into a button that also opens the dialog prompt.
+
+Each embedded roll can be hidden or deleted via context menu.
+
+## Compatibility
 
 - [Dice So Nice!](https://foundryvtt.com/packages/dice-so-nice/)
 - Not tested with non-core rolling modules. No compatibility is expected.
 
-# Dependencies
+## Dependencies
 
 - [libWrapper](https://foundryvtt.com/packages/lib-wrapper)
 
