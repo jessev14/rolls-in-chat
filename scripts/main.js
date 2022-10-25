@@ -65,7 +65,7 @@ Hooks.once('init', () => {
         const item = actor.items.get(card.dataset.itemId);
         const { ability, dc } = item.system.save;
 
-        await rollInChat(message, 'save', ability, dc);
+        await rollInChat({message, rollType: 'save', abilitySkill: ability, dc});
 
         button.disabled = false;
     });
@@ -118,7 +118,7 @@ Hooks.on('renderChatLog', (app, html, data) => {
         const promptMessage = game.messages.get(chatMessageID);
         const { rollType, abilitySkill } = $button.data();
 
-        await rollInChat(promptMessage, rollType, abilitySkill);
+        await rollInChat({message: promptMessage, rollType, abilitySkill, event: ev});
     });
 
     html.on('click', `.ric img`, ev => {
@@ -229,7 +229,7 @@ Hooks.on('renderChatLog', (app, html, data) => {
 });
 
 
-async function rollInChat(message, rollType, abilitySkill, dc = null) {
+async function rollInChat({message, rollType, abilitySkill, event = null, dc = null} = {}) {
     let actors = [];
     if (game.user.character) actors = [game.user.character];
     else actors = canvas.tokens.controlled.map(t => t.actor);
@@ -238,19 +238,24 @@ async function rollInChat(message, rollType, abilitySkill, dc = null) {
     let flagData = message.getFlag(moduleID, 'rolls') || [];
     const rolls = [];
     const dsnPromises = [];
+    const rollOptions = {
+        chatMessage: false,
+        dialogOptions: { left: window.innerWidth - 710 }
+    };
+    if (event) rollOptions.dialogOptions.top = event.clientY - 50;
     for (const actor of actors) {
         const roll = {};
 
         let r;
         switch (rollType) {
             case 'save':
-                r = await actor.rollAbilitySave(abilitySkill, { chatMessage: false });
+                r = await actor.rollAbilitySave(abilitySkill, rollOptions);
                 break;
             case 'abilityTest':
-                r = await actor.rollAbilityTest(abilitySkill, { chatMessage: false });
+                r = await actor.rollAbilityTest(abilitySkill, rollOptions);
                 break;
             case 'skill':
-                r = await actor.rollSkill(abilitySkill, { chatMessage: false });
+                r = await actor.rollSkill(abilitySkill, rollOptions);
         }
         if (!r) continue;
 
