@@ -65,7 +65,7 @@ Hooks.once('init', () => {
         const item = actor.items.get(card.dataset.itemId);
         const { ability, dc } = item.system.save;
 
-        await rollInChat({message, rollType: 'save', abilitySkill: ability, dc});
+        await rollInChat({ message, rollType: 'save', abilitySkill: ability, dc });
 
         button.disabled = false;
     });
@@ -107,9 +107,16 @@ Hooks.on('renderChatMessage', async (message, html, data) => {
 
     const snippet = await renderTemplate(`modules/${moduleID}/templates/${moduleID}.hbs`, { rolls: flagData });
     html.find(`div.card-buttons`).after(snippet);
-    
+
     const cardContent = html.find(`div.card-content`);
     if (game.settings.get(moduleID, 'foldMessage') && cardContent.length) cardContent[0].style.display = 'none';
+
+    if (game.modules.get('better-dice-tooltips')?.active) {
+        const cb = Hooks.events.renderChatMessage.find(h => h.fn.name === 'betterDiceTooltips')?.fn;
+        if (!cb) return;
+
+        cb.call(null, message, html, data);
+    }
 });
 
 Hooks.on('renderChatLog', (app, html, data) => {
@@ -119,7 +126,7 @@ Hooks.on('renderChatLog', (app, html, data) => {
         const promptMessage = game.messages.get(chatMessageID);
         const { rollType, abilitySkill } = $button.data();
 
-        await rollInChat({message: promptMessage, rollType, abilitySkill, event: ev});
+        await rollInChat({ message: promptMessage, rollType, abilitySkill, event: ev });
     });
 
     html.on('click', `.ric img`, ev => {
@@ -230,7 +237,7 @@ Hooks.on('renderChatLog', (app, html, data) => {
 });
 
 
-async function rollInChat({message, rollType, abilitySkill, event = null, dc = null} = {}) {
+async function rollInChat({ message, rollType, abilitySkill, event = null, dc = null } = {}) {
     let actors = [];
     if (game.user.character) actors = [game.user.character];
     else actors = canvas.tokens.controlled.map(t => t.actor);
