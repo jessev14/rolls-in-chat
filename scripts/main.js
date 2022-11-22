@@ -428,7 +428,7 @@ function createPromptMessage(rollType, abilitySkill) {
     ChatMessage.create({ content });
 
     function buttonLabel(rollType, abilitySkill) {
-        let label = CONFIG.DND5E.abilities[abilitySkill].label || CONFIG.DND5E.skills[abilitySkill].label;
+        let label = CONFIG.DND5E.abilities[abilitySkill]?.label || CONFIG.DND5E.skills[abilitySkill]?.label;
         switch (rollType) {
             case 'save':
                 label += ' Saving Throw';
