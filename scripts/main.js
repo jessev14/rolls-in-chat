@@ -107,8 +107,9 @@ Hooks.on('renderChatMessage', async (message, html, data) => {
 
     const snippet = await renderTemplate(`modules/${moduleID}/templates/${moduleID}.hbs`, { rolls: flagData });
     html.find(`div.card-buttons`).after(snippet);
-
-    if (game.settings.get(moduleID, 'foldMessage')) html.find(`div.card-content`)[0].style.display = 'none';
+    
+    const cardContent = html.find(`div.card-content`);
+    if (game.settings.get(moduleID, 'foldMessage') && cardContent.length) cardContent[0].style.display = 'none';
 });
 
 Hooks.on('renderChatLog', (app, html, data) => {
@@ -164,7 +165,7 @@ Hooks.on('renderChatLog', (app, html, data) => {
         const d20button = document.createElement('a');
         d20button.classList.add('chat-control-icon');
         d20button.innerHTML = `<i class="fas fa-dice-d20"></i>`;
-        d20button.onclick = () => createPromptDialog();
+        d20button.onclick = ev => createPromptDialog(ev);
         d20icon.parentElement.replaceChild(d20button, d20icon);
     }
 
@@ -299,7 +300,12 @@ async function rollInChat({message, rollType, abilitySkill, event = null, dc = n
     return socket.executeAsGM('updateMessage', message.id, flagData);
 }
 
-function createPromptDialog() {
+function createPromptDialog(event) {
+    const dialogOptions = { width: 250 };
+    if (event) {
+        dialogOptions.top = event.target.offsetTop - 30;
+        dialogOptions.left = window.innerWidth - 560;
+    }
     new Dialog({
         title: 'Creat Roll in Chat Prompt',
         content: `
@@ -323,13 +329,13 @@ function createPromptDialog() {
                 callback: () => createAbilityCheckDialog(true)
             }
         }
-    }, { width: 250 }).render(true);
+    }, dialogOptions).render(true);
 }
 
 function createSkillCheckDialog() {
     let skillOptions = ``;
     for (const [skl, skill] of Object.entries(game.system.config.skills)) {
-        skillOptions += `<option value="${skl}">${skill}</option>`;
+        skillOptions += `<option value="${skl}">${skill.label}</option>`;
     }
     new Dialog({
         title: 'Select Skill',
@@ -422,7 +428,7 @@ function createPromptMessage(rollType, abilitySkill) {
     ChatMessage.create({ content });
 
     function buttonLabel(rollType, abilitySkill) {
-        let label = CONFIG.DND5E.abilities[abilitySkill] || CONFIG.DND5E.skills[abilitySkill];
+        let label = CONFIG.DND5E.abilities[abilitySkill].label || CONFIG.DND5E.skills[abilitySkill].label;
         switch (rollType) {
             case 'save':
                 label += ' Saving Throw';

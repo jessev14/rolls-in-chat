@@ -41,6 +41,7 @@
     word-break: break-all;
 }
 
+/*
 .ric .result {
     background-image: url(../../../icons/svg/d20-grey.svg);
     position: relative;
@@ -54,6 +55,20 @@
     color: #000;
     font-weight: bold;
     text-align: center;
+}
+*/
+
+.ric .result {
+    flex: none;
+    font-size: var(--font-size-16);
+    font-weight: bold;
+    padding: 0 5px;
+    background: rgba(0, 0, 0, 0.1);
+    border: 1px solid var(--color-text-light-6);
+    border-radius: 3px 3px;
+    min-width: 35px;
+    text-align: center;
+    margin-right: 5px;
 }
 
 .ric .result.pass {
