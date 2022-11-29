@@ -272,7 +272,6 @@ async function rollInChat({ message, rollType, abilitySkill, event = null, dc = 
         roll.total = r.total;
         roll.formula = r.formula;
         const token = actor.token || actor.getActiveTokens()[0].document;
-        debugger
         roll.tokenID = token.id;
         roll.img = token.texture.src;
         roll.name = token.name;
