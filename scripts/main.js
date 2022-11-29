@@ -156,7 +156,7 @@ Hooks.on('renderChatLog', (app, html, data) => {
         if (r.classList.contains('hidden') && !game.user.isGM) return;
 
         const token = getToken(ev);
-        if (token.isVisible && !token._controlled) token._onHoverIn(ev);
+        if (token?.isVisible && !token._controlled) token._onHoverIn(ev);
     });
 
     html.on('mouseleave', `.ric > img`, ev => {
@@ -164,7 +164,7 @@ Hooks.on('renderChatLog', (app, html, data) => {
         if (r.classList.contains('hidden') && !game.user.isGM) return;
 
         const token = getToken(ev);
-        if (token.isVisible) token._onHoverOut(ev);
+        if (token?.isVisible) token._onHoverOut(ev);
     });
 
     if (game.user.isGM && game.settings.get(moduleID, 'chatPromptButton')) {
