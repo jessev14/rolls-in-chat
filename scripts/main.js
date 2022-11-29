@@ -271,9 +271,10 @@ async function rollInChat({ message, rollType, abilitySkill, event = null, dc = 
         while (flagData.map(r => r.id).includes(roll.id)) roll.id = foundry.utils.randomID();
         roll.total = r.total;
         roll.formula = r.formula;
-        const token = actor.token || actor.getActiveTokens()[0];
+        const token = actor.token || actor.getActiveTokens()[0].document;
+        debugger
         roll.tokenID = token.id;
-        roll.img = token.document.texture.src;
+        roll.img = token.texture.src;
         roll.name = token.name;
         roll.tooltip = await r.getTooltip();
         if (dc) roll.passFail = r.total < dc ? 'fail' : 'pass';
@@ -435,7 +436,7 @@ function createPromptMessage(rollType, abilitySkill) {
     ChatMessage.create({ content });
 
     function buttonLabel(rollType, abilitySkill) {
-        let label = CONFIG.DND5E.abilities[abilitySkill]?.label || CONFIG.DND5E.skills[abilitySkill]?.label;
+        let label = CONFIG.DND5E.abilities[abilitySkill] || CONFIG.DND5E.skills[abilitySkill]?.label;
         switch (rollType) {
             case 'save':
                 label += ' Saving Throw';
